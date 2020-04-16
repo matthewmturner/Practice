@@ -26,6 +26,39 @@ def merge_ranges(time_ranges: Times) -> Times:
     current_end = None
     condensed_times = []
 
-    # for i, time in enumerate(sorted_times):
-    #     if i == 0:
-    return None
+    for i, time in enumerate(sorted_times):
+        if i == 0:
+            current_start = time[0]
+            current_end = time[1]
+        else:
+            new_start = time[0]
+            new_end = time[1]
+            if (new_start < current_end) and (new_end < current_end):
+                if i == len(time_ranges) - 1:
+                    merged_time = current_start, current_end
+                    condensed_times.append(merged_time)
+                else:
+                    next
+            elif (new_start > current_end) or (new_end < current_end):
+                merged_time = current_start, current_end
+                condensed_times.append(merged_time)
+                current_start = new_start
+                current_end = new_end
+            elif new_start < current_end:
+                if new_end > current_end:
+                    if i == len(time_ranges) - 1:
+                        merged_time = current_start, new_end
+                        condensed_times.append(merged_time)
+                    else:
+                        current_end = new_end
+            else:
+                merged_time = current_start, new_end
+                condensed_times.append(merged_time)
+                current_start = new_start
+                current_end = new_end
+
+    return condensed_times
+
+
+times = [(1, 10), (2, 6), (3, 5), (7, 9)]
+print(merge_ranges(times))
