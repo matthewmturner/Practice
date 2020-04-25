@@ -27,6 +27,39 @@ def create_word_cloud(sentence):
     return word_cloud
 
 
-s = "The bill came to five dollars."
-print(create_word_cloud(s))
+def word_cloud2(sentence):
+
+    word_cloud = dict()
+    sentence_end = set([".", "!", "?"])
+    punctuation = set([",", ":", "(", ")"])
+
+    current_word = ""
+    new_sentence = False
+    for i, char in enumerate(sentence):
+        if (i == 0) or (new_sentence == True):
+            current_word += char.lower()
+            new_sentence = False
+        elif char in punctuation:
+            word_ct = word_cloud.get(current_word, 0)
+            word_cloud[current_word] = word_ct + 1
+            current_word = ""
+            next
+        elif (char in sentence_end) and (current_word != ""):
+            word_ct = word_cloud.get(current_word, 0)
+            word_cloud[current_word] = word_ct + 1
+            current_word = ""
+            new_sentence = True
+            next
+        elif (char == " ") and (current_word != ""):
+            word_ct = word_cloud.get(current_word, 0)
+            word_cloud[current_word] = word_ct + 1
+            current_word = ""
+        else:
+            current_word += char
+
+    return word_cloud
+
+
+s = "We came, we saw, we conquered...then we ate Bill's (Mille-Feuille) cake."
+print(word_cloud2(s))
 s.split()
